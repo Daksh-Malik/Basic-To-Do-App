@@ -1,7 +1,6 @@
 import './App.css';
-import React, {useState, useEffect} from 'react'
-
-let globalID = 0
+import React, {useState} from 'react'
+import StartScreen from './components/StartScreen';
 
 function App() {
 
@@ -44,19 +43,23 @@ function App() {
           <button id='add' onClick={addToList}></button>
         </div>
         <div id='outer-container'>
-          <div id='inner-container'>
-            <ul>
-              {Object.values(list).map((item) => {
-                return <div key={item.id} className={`item ${item.completed ? 'completed' : ''}`}>
-                  <div>
-                    <li className={item.completed && 'completed'}>{item.todo}</li>
+          {Object.keys(list).length === 0 ? 
+            <StartScreen/>
+            :
+            <div id='inner-container'>
+              <ul>
+                {Object.values(list).map((item) => {
+                  return <div key={item.id} className={`item ${item.completed ? 'completed' : ''}`}>
+                    <div>
+                      <li className={item.completed && 'completed'}>{item.todo}</li>
+                    </div>
+                    <button id='done' onClick={()=>done(item.id)}></button>
+                    <button id='remove' onClick={()=>deleteItem(item.id)}></button>
                   </div>
-                  <button id='done' onClick={()=>done(item.id)}></button>
-                  <button id='remove' onClick={()=>deleteItem(item.id)}></button>
-                </div>
-              })}
-            </ul>
-          </div>
+                })}
+              </ul>
+            </div>
+          }
         </div>
     </div>
   );
